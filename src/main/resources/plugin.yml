@@ -1,0 +1,4 @@
+name: FiguraHook
+version: '${project.version}'
+main: eu.asangarin.figurahook.FiguraHook
+api-version: 1.18
