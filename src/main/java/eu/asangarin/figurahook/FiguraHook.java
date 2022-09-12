@@ -4,6 +4,10 @@ import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 public final class FiguraHook extends JavaPlugin {
 	@Getter
 	private static FiguraHook plugin;
@@ -19,7 +23,14 @@ public final class FiguraHook extends JavaPlugin {
 		getServer().getMessenger().registerOutgoingPluginChannel(this, CUSTOM_EVENT_IDENTIFIER);
 	}
 
-	public static void sendCustomEvent(Player player) {
-		player.sendPluginMessage(FiguraHook.getPlugin(), CUSTOM_EVENT_IDENTIFIER, new byte[0]);
+	public static void sendCustomEvent(Player player, String id) {
+		ByteArrayOutputStream b = new ByteArrayOutputStream();
+		DataOutputStream out = new DataOutputStream(b);
+		try {
+			out.writeUTF(id);
+		} catch (IOException ignored) {
+		}
+
+		player.sendPluginMessage(FiguraHook.getPlugin(), CUSTOM_EVENT_IDENTIFIER, b.toByteArray());
 	}
 }
